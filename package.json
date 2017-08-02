@@ -1,0 +1,16 @@
+{
+  "name" : "ICOTest",
+  "version" : "0.1.0",
+  "main" : "app/app.js",
+  "license":"AGPL-3.0",
+  "dependencies" : {
+    "express" : "~4.0.0",
+    "express-fileupload": "*",
+    "body-parser" : "~1.0.1",
+    "ethereumjs-abi":"^0.1.0",
+    "json-rpc2" : "^1.0.0",
+    "ethereumjs-abi": "^0.1.0",
+    "web3" : "^1.0,0",
+    "ethereumjs-util" : "^2.6.0",
+  }
+}

@@ -1,0 +1,500 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script src = "static/js/questions.js"></script>
+ 
+ 
+ <!-- JQuery 3.2.1 -->    
+ <!--<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+ </script>-->
+
+ <script src = "static/js/jquery-3.1.1.min.js"></script>
+ 
+ <!-- Bootstrap -->
+
+
+<link rel="stylesheet" href="static/css/bootstrap.min.css">
+<link rel = "stylesheet" href = "static/css/core_style.css">
+
+<script src = "static/js/bootstrap.min.js"></script>
+
+
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+
+
+ <style>
+
+  #startOverText{
+    display: block;
+    font-size: 25px;
+  }
+
+  .#startOver{
+
+  height: 20px;
+  }
+
+  .question_card {
+      color: #DADAE2;
+      padding-left: 3%;
+      padding-right: 3%;
+      padding-bottom: 4%;
+      padding-top: 4%;
+      margin-left: 6%;
+      margin-right: 6%;
+      margin-top: 4%;
+      margin-bottom: 4%;
+      zbackground-color: #86869F;
+
+  }
+
+  #elementTitle{
+
+  }
+
+  .q_indiv{
+     color: #333333;
+     border: 1px solid #DDDDDD;
+     padding: 4%;
+     margin: 5%;
+     border-radius: 2px;
+     zbackground-color: #dADAE2;
+     
+  }
+  .card_button{
+    border-radius: 5px;
+    padding: 7px;
+    width: auto;
+    border: ;
+    margin: 1%;
+    color: white;
+    background-color: #AAAABB;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 30px;
+  }
+
+  .no-select{
+    -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+  }
+
+  .card_button:hover{
+    background-color:#00c8aa;
+  }
+
+  .example {
+    color: #555555;
+  }
+
+  .main_wrapper{
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    margin-top: 3%;
+    background-color: white;
+  }
+
+  .q {
+    font-size: 30px;
+    line-height:30px; 
+  }
+
+  body {
+     font-family: 'Lato', sans-serif;
+     color: #333333;
+    zbackground-color: #47475C;
+     background-color: #EEEEEE
+
+  }
+
+
+ 
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #00c8aa;
+}
+.option-input:checked::before {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  content: 'x';
+  display: inline-block;
+  font-size: 26.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+ 
+.titles{
+  margin-left: 6%;
+  color: #333333;
+  border: 1px solid #DDDDDD;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-bottom: 1%;
+  margin: 5%;
+  border-radius: 2px;
+  background-color: #dADAE2;
+
+}
+
+.button_container{
+padding-top: 2%;
+padding-bottom: 2%;
+padding-left: 4%;
+
+}
+
+.mainTitle{
+  font-size: 35px;
+}
+
+#elementSummary{
+  font-size: 25px;
+  color: rgba(0,0,0,0.5);
+  padding-bottom: 3%;
+
+}
+
+header {
+    padding: 10px 0;
+    width: 100%;
+    background-color: #1ab9a7;
+    display: block;
+
+}
+
+#logo{
+background-image: url('/static/images/proof_web2.png');
+background-repeat: no-repeat;
+height: 50px;
+
+}
+
+.titlesBorder{
+    border: 1px #cccccc solid
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+         <div class="container">
+            <div class="row">
+        	<div class="col-md-4 col-xs-3" id="logo"><a href="http://www.proofsuite.com"></a></div>
+            
+            <div class="btn-responsive-menu"> <span class="bar"></span> <span class="bar"></span> <span class="bar"></span> </div>
+
+            <nav class="col-md-8 col-xs-9" id="top-nav">
+            	<ul>
+                    <li><a href="http://www.proofsuite.com">Proof Suite</a></li>
+                    <li><a href="https://beta.proofdashboard.com">Dashboard</a></li>
+                    <li><a href="http://beta.proofdashboard.com/marketplace">Marketplace</a></li>
+               </ul>
+            </nav><!-- End Nav -->
+            
+         </div><!-- End row -->
+         </div><!-- End container -->
+</header>
+
+<div class = "main_wrapper container">
+
+<div id = "title-card" style = "display:none" >
+
+</div>
+
+<div id = "mainTest">
+    <div class = "question_card">
+<div class = "titlesBorder">
+  
+       <div class = "button_container">        
+        <div class = "backButton card_button no-select"> < </div>
+        <div class = "forwardButton card_button no-select"> > </div>
+      </div>
+
+        <div class = "titles">
+            <h1 class = "mainTitle">
+               <strong><div id = "elementTitle"></div></strong>
+            </h1>
+            
+            <div id = "elementSummary"></div>
+            
+        </div>
+
+
+        <div id = "questions"></div>
+ 
+      
+        <div class = "button_container">
+         <div class = "backButton card_button no-select"> < </div>
+        <div class = "forwardButton card_button no-select"> > </div>
+        </div>
+     </div>
+
+      
+
+</div>
+</div>
+
+
+
+<div id = "statusScreen" style = "display:none" >
+  <div class = "question_card">
+    <div class = "q_indiv">
+    <h1>Your Token Statistics</h1><br/>
+    <div>
+       <h1>Token Securities Score: <div id= "statNum"></div><br/></h1>
+       <h2>Rating: <div id = "statMessage"></div></h2>
+
+    </div>
+    <div id = "startOver" class = "card_button"><div id="startOverText">Start Over</div></div>
+  </div>
+  </div>
+</div>
+<div>
+
+</body>
+
+
+<script>
+
+  //Variables
+  cur_element = 1;
+  question_num = 0;
+  elemNum = Object.keys(question_array).length;
+  QA = question_array;
+  total_q = getQuestionNumber(QA);
+  QuestCont = buildQuestContainer(total_q);
+  questList = [];
+  prev_element = "element1"; 
+  visited = [];
+  analytics = {};
+  //Update Page
+ 
+  function updatePage(element){
+
+    if (typeof(QA[element]) == "undefined"){
+        element = "element1";
+        cur_element = parseInt(element.slice(-1));
+    } else {
+        qList[element] = []
+    }
+        
+    
+    $("#elementTitle").text(QA[element]["name"]);
+    $("#elementSummary").text(QA[element]["summary"]);
+    question_list = QA[element]["questions"];
+
+    question_string = "";
+
+    for (i = 0; i <= question_list.length - 1; i++){
+        
+        name_string = element + "Q" + String(i);
+        value = question_list[i]["val"]
+
+        analytics[name_string] = [element,value,question_list[i]]
+
+ 
+        if (questList.includes(name_string) == false){
+            questList.push(name_string);
+        }
+
+        console.log(name_string);
+        question_string    += "<div id='" + name_string + "' class = 'q_indiv' >"
+                           + "<strong><div class = 'q'>"+ question_list[i]["Header"] 
+                           + "</strong></div><br/>" 
+                           + "<p class = 'example'>"+question_list[i]["Question"]+ "</p><br/>"
+                           + "<form><input id = 'true' class = 'option-input radio' type='radio' name='"+name_string+"' value='"+ value +"'><label for='true'>True</label><br/>"
+                           + "<input id = 'false' class = 'option-input radio' type = 'radio' name='"+name_string+"' value='0'> <label for ='false'>False </label> </form>"
+                           + "</div>" 
+    }
+
+    question_string = "<div id = '"+ element + "'class = 'q_full' >" + question_string + "</div>"
+    try{ 
+        $('#' + prev_element).hide();
+    }catch (err){
+      //do nothing
+    }
+
+    if (visited.includes(element) == false){
+        
+        $("#questions").append(question_string);
+    }else{
+        $("#" + element).show();
+    }
+
+    prev_element = element;
+    visited.push(element); 
+
+  }
+
+  //Buttons
+  //BACK BUTTON
+  $(".backButton").on("click",function(){
+
+    if (cur_element > 0){ //increment backwards
+        cur_element -= 1;
+    } else {
+        cur_element = 1;
+    }
+
+    updatePage("element" + String(cur_element))
+  });
+
+  //INIT
+  $(document).ready(updatePage());
+
+  //FORWARD BUTTON
+  $(".forwardButton").on("click",function(){
+    cur_element += 1;    //increment forwards
+    if (cur_element > elemNum){    //If the increment exceeds the number of elements, show the stats
+        stat_num = calculateStatNum();
+        showAnalytics(stat_num);
+        $("#mainTest").hide();
+        $("#statusScreen").show();
+        $("#statNum").html(stat_num);
+    }
+     
+    updatePage("element" + String(cur_element));
+    $("html, body").animate({ scrollTop: 0}, "slow");
+    return false;
+
+  });
+
+//  START OVER BUTTON
+
+  $("#startOver").on("click",function(){
+    visited = [];
+    cur_element = 1;
+    question_num = 0;
+    elemNum = Object.keys(question_array).length;
+    QA = question_array;
+    qList = {};
+    $("#questions").html("");
+    $("#statusScreen").hide();
+    $("#mainTest").show();
+    updatePage();
+    
+  });
+ 
+
+  function getQuestionNumber(hash_table){
+    totals = 0;
+    table_list = Object.keys(hash_table)
+    for (i = 0; i < table_list.length; i++){
+      key = table_list[i]
+      totals += hash_table[key].questions.length;
+    }
+    return totals;
+  }
+
+  function buildQuestContainer(num){
+    
+    qList = {};
+    for (i = 1; i < num; i++){
+        console.log(i);
+        qList["Q" + String(i)] = ""
+    }
+    return qList;
+
+  } 
+
+
+
+
+  function calculateStatNum(){
+    var valList = [];
+    var total = 0;
+
+    for (i = 0; i < questList.length - 1; i++){
+        var partnum = questList[i];
+
+        var stat = $("input[name ='"+ partnum +"']:checked").val();
+        if (typeof(stat) == "undefined"){
+            stat = 0;
+        } 
+        total += parseInt(stat);
+    }
+    return total 
+
+  }
+
+  function showAnalytics(num){
+    //Get high level info
+      num = parseInt(num);
+      if (num <= 0) {
+        basic_msg = "Not a Security";
+        color = "blue";
+      } else if (0 < num && num <= 33) {
+        basic_msg = "Unlikely";
+        color = "green"      
+      } else if (33 < num && num <= 66){
+        basic_msg = "Equally Likely and Unlikely"
+        color = "yellow"
+      } else if (66 < num && num <= 99){ 
+        basic_msg = "Likely";
+        color = "orange";      
+      } else if (num >= 100){      
+        basic_msg = "Very Likely";
+        color = "red";      
+      }
+      $("#statMessage").html(basic_msg);
+      $("#statMessage").css({"color" : color})
+  }
+
+</script>
+
+</html>
