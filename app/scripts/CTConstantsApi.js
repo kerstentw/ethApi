@@ -29,7 +29,8 @@ module.exports = {
     getContractAddr: getContractAddr,
     purchaseToken: purchaseToken,
     nullifyProduct: nullifyProduct,
-    createProduct: createProduct
+    createProduct: createProduct,
+    sendRaw: sendRaw
 }
 
 
@@ -54,6 +55,25 @@ function getContractAddr(addr){
     nonceContainer.then(pull_callback);
 }
 
+
+function sendRaw(raw_data){
+
+    respond_str = "";
+    client.call('eth_sendRawTransaction',[{
+        data: raw_data
+            }],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+
+                    respond_str = response;
+
+               }
+            );
+
+
+}
 
 
 function owner(cont_addr) {

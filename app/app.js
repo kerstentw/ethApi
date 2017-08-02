@@ -24,10 +24,10 @@ function capitalizeFirstLetter(string) {
 
 
 
-app.get('/eth/purchase_token', function(req, res){
-    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+app.get('/eth/sendRaw', function(req, res){
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through data"}))}
     
-    endpoints.purchaseToken(req.query.addr);
+    endpoints.sendRaw(req.query.data);
     setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
     
 
@@ -124,7 +124,7 @@ app.get('/eth/contract/call/name', function(req, res){
 
 
 app.get('/eth/contract/call/checkproduct', function(req, res){
-    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through payload"}))}
 
 
     endpoints.checkProduct(req.query.name,req.query.addr);
@@ -134,7 +134,7 @@ app.get('/eth/contract/call/checkproduct', function(req, res){
 
 
 app.get('/eth/contract/call/inventoryproduct', function(req, res){
-    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through payload"}))}
 
 
     endpoints.inventoryProduct(req.query.addr,req.query.addr);
