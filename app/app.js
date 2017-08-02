@@ -22,6 +22,28 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
+
+app.get('/eth/purchase_token', function(req, res){
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+    
+    endpoints.purchaseToken(req.query.addr);
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
+    
+
+});
+
+
+app.get('/eth/get_contract_addr', function(req, res){
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+    
+    endpoints.getContractAddr(req.query.addr);
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
+    
+
+});
+
+
 app.get('/eth/contract/call/owner', function(req, res){
     if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
     
@@ -158,7 +180,7 @@ app.get('/eth/deploy_contract', function(req, res){
                    data = conDep.returnData();
                    console.log('AHAHAHA::: ' + data)
                    res.send(JSON.stringify({status: "success", message: data}));
-               },30000);
+               },20000);
     
 
 });
@@ -197,7 +219,7 @@ app.post('/email_submit', function (req, res) {
 // TODO : BitLegal Rating. 
 
 
-var server = app.listen(3000, function () {
+var server = app.listen(8080, function () {
    var host = server.address().address
    var port = server.address().port
    console.log("Test app listening at http://%s:%s", host, port)

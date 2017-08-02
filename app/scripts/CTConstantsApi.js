@@ -3,10 +3,12 @@ var rpc = require('json-rpc2');
 var ABI = require('ethereumjs-abi');
 var abi = new ABI();
 var master = "0x443B9375536521127DBfABff21f770e4e684475d";
-
+var ethJsUtil = require('./js-util');
 var live_node = "52.37.130.246";
 var rpc_port = "8545";
+var Web3 = require('web3');
 
+web3 = new Web3(new Web3.providers.HttpProvider("http://52.37.130.246:8545"))
 
 client = rpc.Client.$create(rpc_port, live_node);
 
@@ -23,18 +25,35 @@ module.exports = {
     checkProduct: checkProduct,
     inventoryProduct: inventoryProduct,
     respond_str: respond_str,
-    respond: respond
+    respond: respond,
+    getContractAddr: getContractAddr,
+    purchaseToken: purchaseToken,
+    nullifyProduct: nullifyProduct,
+    createProduct: createProduct
 }
 
 
 
 var respond_str = "Too early";
-
+var public_addr = "";
 
 
 function respond(){
     return respond_str;
 }
+
+function pull_callback(nonce){
+      respond_str = ethJsUtil.bufferToHex(ethJsUtil.generateAddress(
+      public_addr, nonce));
+
+}
+
+function getContractAddr(addr){
+    public_addr = addr;
+    var nonceContainer = web3.eth.getTransactionCount(addr);
+    nonceContainer.then(pull_callback);
+}
+
 
 
 function owner(cont_addr) {
@@ -237,6 +256,84 @@ function inventoryProduct(_name, cont_addr){
 
 }
 
+
+
+
+function hex2d(hex){
+
+    var ret_int = parseInt(hex, 16);
+    return ret_int
+}
+
+function hex2a(hex) {
+    var str = '';
+    for (var i = 0; i < hex.length; i += 2) {
+        var v = parseInt(hex.substr(i, 2), 16);
+        if (v) str += String.fromCharCode(v);
+    }
+    return str;
+}  
+
+
+function purchaseToken(_fromAddr, _contractAddr, _value){
+
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        value: _value,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('purchaseToken',[],[]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+                respond_str = response;
+
+               }
+            );
+}
+
+
+function createProduct(_name, _price, _limit, _contractAddr){
+
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('createProduct',["bytes32","uint256","uint256"],[_name, _price, _limit]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+                    respond_str = response;
+
+               }
+            );
+}
+
+
+
+function nullifyProduct(_name, _contractAddr){
+    
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('nullifyProduct',["bytes32"],[_name]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+                    respond_str = response;
+
+               }
+            );
+}
+
+
+
+
+
 function test(){
    
     owner("0x60F352141e69Bc57370C3E924F583312aB7D0992");
@@ -267,39 +364,3 @@ function test(){
     setTimeout(function(){"name: " + console.log(respond_str);},3000);
 
 }
-
-
-function hex2d(hex){
-
-    var ret_int = parseInt(hex, 16);
-    return ret_int
-}
-
-function hex2a(hex) {
-    var str = '';
-    for (var i = 0; i < hex.length; i += 2) {
-        var v = parseInt(hex.substr(i, 2), 16);
-        if (v) str += String.fromCharCode(v);
-    }
-    return str;
-}  
-
-
-function testBuy(){
-
-client.call('eth_sendTransaction',[{
-        from: master,
-        value: "0xb1a2bc2ec50000",
-        to: "0x46b87b9c794ddb93b2a16bc1719111caec1cbd88",
-        data: '0x'+ abi.rawEncode('purchaseToken',[],[]).toString('hex')
-            }],function(err,response){
-                if (err){
-                    console.log(err.message);
-                    return;
-                } //end if
-               console.log(response);
-
-               }
-            );
-}
-
