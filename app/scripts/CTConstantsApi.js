@@ -77,13 +77,13 @@ function sendRaw(raw_data){
 }
 
 
-function balanceof(cont_addr) {
+function balanceof(cont_addr,user_addr) {
     console.log("OWNER")
     respond_str = "";
     client.call('eth_call',[{
         from: master,
         to: cont_addr,
-        data: '0x'+ abi.rawEncode('balanceof',[],[]).toString('hex')
+        data: '0x'+ abi.rawEncode('balanceOf',['address'],[user_addr]).toString('hex')
             },"latest"],function(err,response){
                 if (err){
                     respond_str = err.message;
@@ -96,6 +96,8 @@ function balanceof(cont_addr) {
             );
 
 }
+
+
 
 
 
@@ -338,6 +340,11 @@ function purchaseToken(_fromAddr, _contractAddr, _value){
 }
 
 
+//function purchaseProduct(bytes32 _name, uint256 amnt)
+
+
+
+
 function createProduct(_name, _price, _limit, _contractAddr){
 
     client.call('eth_sendTransaction',[{
@@ -375,6 +382,22 @@ function nullifyProduct(_name, _contractAddr){
 }
 
 
+function nullifyProduct(_name, _contractAddr){
+
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('nullifyProduct',["bytes32"],[_name]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+                    respond_str = response;
+
+               }
+            );
+}
 
 
 

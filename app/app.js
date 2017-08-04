@@ -38,7 +38,7 @@ app.get('/eth/sendRaw', function(req, res){
 app.get('/eth/contract/call/balanceof', function(req, res){
     if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
     
-    endpoints.balanceof(req.query.addr);
+    endpoints.balanceof(req.query.addr,req.query.useraddr);
     setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
     
 
@@ -150,7 +150,7 @@ app.get('/eth/contract/call/inventoryproduct', function(req, res){
     if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through payload"}))}
 
 
-    endpoints.inventoryProduct(req.query.addr,req.query.addr);
+    endpoints.inventoryProduct(req.query.name,req.query.addr);
     setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
 
 });
@@ -232,7 +232,7 @@ app.post('/email_submit', function (req, res) {
 // TODO : BitLegal Rating. 
 
 
-var server = app.listen(8080, function () {
+var server = app.listen(3000, function () {
    var host = server.address().address
    var port = server.address().port
    console.log("Test app listening at http://%s:%s", host, port)

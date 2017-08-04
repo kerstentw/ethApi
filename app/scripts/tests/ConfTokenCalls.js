@@ -33,15 +33,13 @@ function purchaseToken(_fromAddr, _contractAddr, _value){
 }
 
 
-purchaseToken(master,"0x8e07c06f00416fb7894ee0a81ee7231f969b9c28", "0xB1A2BC2EC50000");
 
-
-function createProduct(_name, _price, _limit, _contractAddr){
-
+function redeem(_fromAddr, _contractAddr){
+    console.log("Calling Redeem")
     client.call('eth_sendTransaction',[{
         from: _fromAddr,
         to: _contractAddr,
-        data: '0x'+ abi.rawEncode('createProduct',["bytes32","uint256","uint256"],[_name, _price, _limit]).toString('hex')
+        data: '0x'+ abi.rawEncode('__redeem',[],[]).toString('hex')
             }],function(err,response){
                 if (err){
                     console.log(err.message);
@@ -53,6 +51,56 @@ function createProduct(_name, _price, _limit, _contractAddr){
             );
 }
 
+
+//redeem('0x443B9375536521127DBfABff21f770e4e684475d','0x8e07c06f00416fb7894ee0a81ee7231f969b9c28');
+
+
+
+function createProduct(_fromAddr, _contractAddr, _name, _price, _limit){
+    console.log("Calling createProduct")
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('newProduct',['bytes32','uint256','uint256'],[_name, _price, _limit]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    console.log(err.message);
+                    return;
+                } //end if
+                    console.log(response);
+
+               }
+            );
+}
+
+
+//createProduct('0x443B9375536521127DBfABff21f770e4e684475d','0x55b6d9b9f38de27ed8cf30f354c7aba1e9c43b6a' ,"TEST12",1,200000);
+//createProduct('0x443B9375536521127DBfABff21f770e4e684475d',"0x443b94e8fefdce9f0ea9215709998fad94aa86f0", "TEST12",1,200000);
+
+
+function transfer(_fromAddr, _contractAddr, _toAddr, _amnt){
+    console.log("Calling transfer")
+    client.call('eth_sendTransaction',[{
+        from: _fromAddr,
+        to: _contractAddr,
+        data: '0x'+ abi.rawEncode('transfer',['address','uint256'],[_toAddr, _amnt]).toString('hex')
+            }],function(err,response){
+                if (err){
+                    console.log(err.message);
+                    return;
+                } //end if
+                    console.log(response);
+
+               }
+            );
+}
+
+
+//transfer('0x443B9375536521127DBfABff21f770e4e684475d','0x55b6d9b9f38de27ed8cf30f354c7aba1e9c43b6a' , "0x5b1318892A5D7a0B94f64aFc0fCDC5B22e884555" ,1)
+
+//transfer('0x443B9375536521127DBfABff21f770e4e684475d',"0x443b94e8fefdce9f0ea9215709998fad94aa86f0" , "0x5b1318892A5D7a0B94f64aFc0fCDC5B22e884555" ,9)
+
+"0x443b94e8fefdce9f0ea9215709998fad94aa86f0"
 
 
 function nullifyProduct(_name, _contractAddr){
