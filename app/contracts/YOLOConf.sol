@@ -12,10 +12,12 @@ contract TEST2 {
     bytes32 public name;
 
     mapping(address => mapping(address => uint256)) allowed;
-    mapping(address => uint256) public balances;
+    mapping(address => uint256) balances;
     mapping(bytes32 => uint256) public productLimits;
     mapping(bytes32 => uint256) public productPrices;
     mapping(address => mapping(bytes32 => uint256)) productOwners;
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
 
     function TEST2() {
 
@@ -46,7 +48,8 @@ contract TEST2 {
         assert(c >= a && c >= b);
         return c;
     } /* Methods */
-    function balanceOf(address _addr) constant returns(uint bal) {
+    
+    function balanceOf(address _addr) constant returns(uint256 bal) {
         return balances[_addr];
     }
 
@@ -69,29 +72,36 @@ contract TEST2 {
     }
 
     function __getEthPrice(uint256 price) {
+        assert(msg.sender == owner);
         currentEthPrice = price;
     }
 
-    function newProduct(bytes32 _name, uint256 price, uint256 limit){
+    function newProduct(bytes32 _name, uint128 price, uint256 limit) returns(bool success) {
+        assert((msg.sender == owner) && (limit > 0));
         productPrices[_name] = price;
         productLimits[_name] = limit;
+        return true;
     }
 
     function nullifyProduct(bytes32 _name) {
+        assert(msg.sender == owner);
         productLimits[_name] = 0;
     }
 
     function modifyProductPrice(bytes32 _name, uint256 newPrice) {
+        assert(msg.sender == owner);
         productPrices[_name] = newPrice;
         productLimits[_name] = productLimits[_name];
     }
 
     function modifyProductLimit(bytes32 _name, uint256 newLimit) {
+        assert(msg.sender == owner);
         productLimits[_name] = newLimit;
         productPrices[_name] = productPrices[_name];
     }
 
     function modifyProductPrice(bytes32 _name, uint256 newPrice, uint256 newLimit) {
+        assert(msg.sender == owner);
         productPrices[_name] = newPrice;
         productLimits[_name] = newLimit;
     }
@@ -119,12 +129,14 @@ contract TEST2 {
         return totalTokens;
     }
 
-    function transfer(address _to, uint256 _value) {
+    function transfer(address _to, uint256 _value) payable returns(bool success) {
         balances[msg.sender] = safeSub(balances[msg.sender], _value);
-        balances[_to] = safeAdd(balances[_to], _value);
+        balances[_to] = safeAdd(balances[msg.sender], _value);
+        Transfer(msg.sender, _to, _value);
+        return true;
     }
 
-    function transferFrom(address _from, address _to, uint256 _value) returns(bool success) {
+    function transferFrom(address _from, address _to, uint256 _value) returns(bool) {
         balances[_from] = safeSub(balances[_from], _value);
         allowed[_from][msg.sender] = safeSub(allowed[_from][msg.sender], _value);
         balances[_to] = safeAdd(balances[_to], _value);
