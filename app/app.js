@@ -23,6 +23,17 @@ function capitalizeFirstLetter(string) {
 }
 
 
+app.get('/eth/genabi', function(req, res){
+    //if(typeof(req.query.method) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through data"}))}
+
+    endpoints.genABI(req.query.method, req.query.types, req.query.args);
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
+
+
+});
+
+
+
 
 app.get('/eth/sendRaw', function(req, res){
     if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through data"}))}

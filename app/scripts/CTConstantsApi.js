@@ -31,7 +31,8 @@ module.exports = {
     nullifyProduct: nullifyProduct,
     createProduct: createProduct,
     sendRaw: sendRaw,
-    balanceof: balanceof
+    balanceof: balanceof,
+    genABI: genABI
 }
 
 
@@ -73,6 +74,27 @@ function sendRaw(raw_data){
                }
             );
 
+
+}
+
+
+function genABI(method,types,args){
+
+    ABI_types = types.split(",");
+    ABI_args = args.split(",");
+
+    if (ABI_types.length != ABI_args.length){
+        respond_str = "Lengths of Args and Types lists must be the same.";
+        return;
+    }
+
+    for (var i = 0; i < ABI_types.length; i++){
+        if (ABI_types[i].indexOf("uint") > -1) {
+            ABI_args[i] = parseInt(ABI_args[i]);
+        } 
+    }
+    
+    respond_str = '0x'+ abi.rawEncode(method,ABI_types,ABI_args).toString('hex');
 
 }
 
