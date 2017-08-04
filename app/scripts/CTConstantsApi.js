@@ -30,7 +30,8 @@ module.exports = {
     purchaseToken: purchaseToken,
     nullifyProduct: nullifyProduct,
     createProduct: createProduct,
-    sendRaw: sendRaw
+    sendRaw: sendRaw,
+    balanceof: balanceof
 }
 
 
@@ -74,6 +75,29 @@ function sendRaw(raw_data){
 
 
 }
+
+
+function balanceof(cont_addr) {
+    console.log("OWNER")
+    respond_str = "";
+    client.call('eth_call',[{
+        from: master,
+        to: cont_addr,
+        data: '0x'+ abi.rawEncode('balanceof',[],[]).toString('hex')
+            },"latest"],function(err,response){
+                if (err){
+                    respond_str = err.message;
+                    return;
+                } //end if
+               respond_str = response.replace("000000000000000000000000","");
+               console.log(respond_str)
+
+               }
+            );
+
+}
+
+
 
 
 function owner(cont_addr) {

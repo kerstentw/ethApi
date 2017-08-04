@@ -34,6 +34,19 @@ app.get('/eth/sendRaw', function(req, res){
 });
 
 
+
+app.get('/eth/contract/call/balanceof', function(req, res){
+    if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
+    
+    endpoints.balanceof(req.query.addr);
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: endpoints.respond()}));},1500);
+    
+
+});
+
+
+
+
 app.get('/eth/get_contract_addr', function(req, res){
     if(typeof(req.query.addr) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through addr"}))}
     
