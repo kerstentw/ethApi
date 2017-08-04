@@ -75,7 +75,7 @@ function createProduct(_fromAddr, _contractAddr, _name, _price, _limit){
 
 
 //createProduct('0x443B9375536521127DBfABff21f770e4e684475d','0x55b6d9b9f38de27ed8cf30f354c7aba1e9c43b6a' ,"TEST12",1,200000);
-createProduct('0x443B9375536521127DBfABff21f770e4e684475d',"0x5ded347c56dcf9e35125c7f7b828f56eeb9668c9", "TEST12",1,200000);
+createProduct('0x443B9375536521127DBfABff21f770e4e684475d',"0xfedead509961e0b002bac80f369d78e2bf399e2e", "TEST12",1,200000);
 
 
 function transfer(_fromAddr, _contractAddr, _toAddr, _amnt){
