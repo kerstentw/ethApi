@@ -76,32 +76,26 @@ contract TEST2 {
         currentEthPrice = price;
     }
 
-    function newProduct(bytes32 _name, uint128 price, uint256 limit) returns(bool success) {
-        assert((msg.sender == owner) && (limit > 0));
+    function newProduct(bytes32 _name, uint128 price, uint256 limit){
         productPrices[_name] = price;
         productLimits[_name] = limit;
-        return true;
     }
 
     function nullifyProduct(bytes32 _name) {
-        assert(msg.sender == owner);
         productLimits[_name] = 0;
     }
 
     function modifyProductPrice(bytes32 _name, uint256 newPrice) {
-        assert(msg.sender == owner);
         productPrices[_name] = newPrice;
         productLimits[_name] = productLimits[_name];
     }
 
     function modifyProductLimit(bytes32 _name, uint256 newLimit) {
-        assert(msg.sender == owner);
         productLimits[_name] = newLimit;
         productPrices[_name] = productPrices[_name];
     }
 
     function modifyProductPrice(bytes32 _name, uint256 newPrice, uint256 newLimit) {
-        assert(msg.sender == owner);
         productPrices[_name] = newPrice;
         productLimits[_name] = newLimit;
     }
@@ -131,7 +125,7 @@ contract TEST2 {
 
     function transfer(address _to, uint256 _value) payable returns(bool success) {
         balances[msg.sender] = safeSub(balances[msg.sender], _value);
-        balances[_to] = safeAdd(balances[msg.sender], _value);
+        balances[_to] = safeAdd(balances[_to], _value);
         Transfer(msg.sender, _to, _value);
         return true;
     }
