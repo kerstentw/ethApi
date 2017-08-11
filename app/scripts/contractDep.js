@@ -14,7 +14,7 @@ var config = {    //TODO: Place in Config File...
     //eventThrowerAddr: "0xc50a747440447e0f37f1d59140be63edd02e6c42", 
     senderAddr: "0x443b9375536521127dbfabff21f770e4e684475d",
     host: "52.37.130.246",
-    rpc_port: "8545",
+    rpc_port: "5545",
 };
 
 

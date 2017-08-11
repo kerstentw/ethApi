@@ -5,10 +5,10 @@ var abi = new ABI();
 var master = "0x443B9375536521127DBfABff21f770e4e684475d";
 var ethJsUtil = require('./js-util');
 var live_node = "52.37.130.246";
-var rpc_port = "8545";
+var rpc_port = "5545";
 var Web3 = require('web3');
 
-web3 = new Web3(new Web3.providers.HttpProvider("http://52.37.130.246:8545"))
+web3 = new Web3(new Web3.providers.HttpProvider("http://52.37.130.246:5545"))
 
 client = rpc.Client.$create(rpc_port, live_node);
 

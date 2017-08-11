@@ -1,0 +1,58 @@
+<html>
+
+<head>
+
+  <style>
+     body {
+          background-image: url('https://i.ytimg.com/vi/cTor8gJj3s8/maxresdefault.jpg');
+          font-family: "Courier New", Courier, monospace;
+          color: white;
+          
+          }
+
+     .textInput{
+         background-color: rgba(0,0,0,0.6);
+         border: 2px solid pink;
+         height: 40%;
+         width: 60%;
+         color: white;
+     }
+
+     .cuntainer{
+         margin: 10%;
+     }
+
+     .submitButton{
+         height: 75px;
+         width: 150px;
+         border-radius: 5px;
+         background-color: pink;
+         border: 1px solid #E4717A;
+         font-size: 19px;
+         color: white;
+         margin: 10px
+     }
+
+    .uni{
+        height:100px;
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+  <div class = "cuntainer">
+    <img class = "uni" src = "https://media.giphy.com/media/l2JJsnBRsvr9bs5RC/giphy.gif">
+    <h1> Davy V's Ethereum Contract Deployer</h1>
+
+    <form method = "POST" action = "/eth/deploy_code">
+       <textarea class = "textInput" name = "contractcode" ></textarea><br/>
+       <input class = "submitButton" type = "submit">
+    </form>
+  </div>
+
+</body>
+
+</html>

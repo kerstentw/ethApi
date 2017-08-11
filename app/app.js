@@ -2,11 +2,16 @@ var express = require('express');
 var fs = require("fs");
 var conDep = require("./scripts/contractDep");
 var endpoints = require("./scripts/CTConstantsApi");
+var rawSend = require("./scripts/rawContractDep");
+var bp = require('body-parser');
+var mS = require("./scripts/multiSigHandler")
 
 
+rawRpc = require("./scripts/ethRpc");
 var app = express();
 
 app.use('/static',express.static('static')); //sets static root
+app.use(bp());
 
 app.get("/", function(req, res){
   fs.readFile("index.html",function(err,data){
@@ -15,12 +20,43 @@ app.get("/", function(req, res){
   });
 });
 
-/**/
 
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+
+app.get('/eth/addrInfo', function(req, res){
+    if(typeof(req.query.addr) == "undefined"){res.send(JSON.stringify({status: "fail", message: "Please send through data"}))};
+    rawRpc.addrInfo(req.query.addr);
+    setTimeout(function(){
+                          info = rawRpc.respond();
+                          res.send(JSON.stringify({status: "success", message: {balance: info[0], nonce: info[1]}}))},1500); 
+
+});
+
+
+app.get('/multisig/confirmtrans', function(req, res){
+    
+    if(typeof(req.query.trans_id) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through data"}))}; 
+    mS.confirmTransaction(req.query.trans_id);
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: mS.respond()}));},1500);
+
+});
+
+
+
+
+app.get('/multisig/submittrans', function(req, res){
+    
+    if((typeof(req.query.dest) == "undefined") || (typeof(req.query.val) == "undefined") ||  (typeof(req.query.dest) == "undefined") ){ res.send(JSON.stringify({status: "fail", message: "Please send through data"}))}
+    mS.submitTransaction(req.query.dest, parseInt(req.query.val),req.query.data, parseInt(req.query.nonce));
+    setTimeout(function(){res.send(JSON.stringify({status: "success", message: mS.respond()}));},1500);
+
+});
+
+
 
 
 app.get('/eth/genabi', function(req, res){
@@ -167,9 +203,23 @@ app.get('/eth/contract/call/inventoryproduct', function(req, res){
 });
 
 
+/*
+app.post('/eth/deploy_code', function(req,res){
+    var contract_code = req.body.contractcode.toString();
+    console.log("GETTING::: " + contract_code);
+    if (typeof(contract_code) == "undefined"){ res.send(JSON.stringify({status: "fail", message: "Please send through payload"})); return;}
 
+    rawSend.compileSend(contract_code);
 
+    setTimeout(function(){
+               data = rawSend.returnData();
+               console.log('AHAHAHA::: ' + data);
+               res.send(JSON.stringify({status: "success", message: data}));
+               },20000);
+    
 
+});
+*/
 
 
 app.get('/eth/deploy_contract', function(req, res){
@@ -209,6 +259,15 @@ app.get('/eth/deploy_contract', function(req, res){
 
 });
 
+
+app.get('/davidendpoint', function (req, res){
+  fs.readFile("templates/davidEndpoint.html", function(err,data){
+    res.write(data);
+    res.end();
+  });
+  
+
+});
 
 app.get('/icosec', function (req, res) {
 
