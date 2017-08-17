@@ -1,1 +1,4 @@
 /home/ubuntu/app/scripts/monitors/
+app/scripts/emailHandler.js
+app/scripts/monitors/MSmonitor.js
+app/scripts/monitors/emailHandler.js
