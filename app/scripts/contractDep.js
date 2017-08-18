@@ -5,18 +5,11 @@ var ABI = require('ethereumjs-abi');
 var solc = require('solc')
 var ethJsUtil = require('./js-util');
 var Web3 = require('web3');
+var config = require("./config").config;
 
 var data_thing;
 
 var abi = new ABI();
-
-var config = {    //TODO: Place in Config File...
-    //eventThrowerAddr: "0xc50a747440447e0f37f1d59140be63edd02e6c42", 
-    senderAddr: "0x443b9375536521127dbfabff21f770e4e684475d",
-    host: "52.37.130.246",
-    rpc_port: "5545",
-};
-
 
 module.exports = {
     compileSend: compileSend,
