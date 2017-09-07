@@ -5,7 +5,7 @@ var endpoints = require("./scripts/CTConstantsApi");
 var rawSend = require("./scripts/rawContractDep");
 var bp = require('body-parser');
 var mS = require("./scripts/multiSigHandler")
-
+var WBF = require("./scripts/WBF_Handler")
 
 rawRpc = require("./scripts/ethRpc");
 var app = express();
@@ -25,6 +25,31 @@ app.get("/", function(req, res){
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+app.get('eth/wristbandconfirm',function(req,res){
+    key = "b443724b85036c325868ea9f5038f5579d970e6c20ab81d28f8e22702f2d271d"
+    //TODO: Check the input vars
+    if (req.query.key != key){
+      res.send(JSON.stringify({status:fail, message: "Incorrect Key"}));
+    }
+
+    tag = req.query.hashtag;
+    WBF.sqliteQuery(tag); //returns (bool success_state, string message)
+    
+
+
+    setTimeout(function(){
+    info = WBF.getMessage
+        if (info[0] == true){
+            stat = "success"
+        } else {
+            stat = "fail"
+        }
+    res.send(JSON.stringify({status: stat, message: info[1]}))
+    },500);
+
+});
+
 
 
 app.get('/eth/addrInfo', function(req, res){
